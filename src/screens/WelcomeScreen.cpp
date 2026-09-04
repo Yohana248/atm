@@ -25,7 +25,7 @@ void WelcomeScreen::handleOption(WelcomeOption option)
 
   if (option == WelcomeOption::INSERT_CARD)
   {
-    cout << '\n';
+    clearScreen();
     EnterPinScreen enterPinScreen;
     enterPinScreen.draw();
   }

@@ -27,3 +27,16 @@ string center(const std::string &text, int width)
 
   return repeat(" ", leftPadding) + text;
 }
+
+void clearScreen()
+{
+#ifdef _WIN32
+  {
+    system("cls");
+  }
+#else
+  {
+    system("clear");
+  }
+#endif
+}
