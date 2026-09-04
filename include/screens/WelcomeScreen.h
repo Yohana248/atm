@@ -1,6 +1,6 @@
 #pragma once
 
-enum WelcomeOption
+enum class WelcomeOption
 {
   INSERT_CARD = 1,
   EXIT = 0
