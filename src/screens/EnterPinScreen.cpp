@@ -18,12 +18,10 @@ string EnterPinScreen::readPin()
 
 void EnterPinScreen::draw()
 {
-  cout << repeat("=", 50) << '\n';
-  cout << center("Enter PIN", 50) << '\n';
-  cout << repeat("=", 50) << "\n\n";
+  drawScreenHeader("Enter PIN");
 
   string pin = readPin();
   cout << '\n'
        << pin << '\n';
-  cout << repeat("-", 50) << '\n';
+  drawBreakLine();
 }

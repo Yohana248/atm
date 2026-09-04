@@ -1,6 +1,9 @@
 #include "utils/utils.h"
+#include <iostream>
 
 using namespace std;
+
+const int WIDTH = 100;
 
 string repeat(const std::string &s, int n)
 {
@@ -15,17 +18,40 @@ string repeat(const std::string &s, int n)
   return result;
 }
 
-string center(const std::string &text, int width)
+string center(const std::string &text)
 {
-  if (static_cast<int>(text.length()) >= width)
+  if (static_cast<int>(text.length()) >= WIDTH)
   {
     return text;
   }
 
-  int padding = width - text.length();
+  int padding = WIDTH - text.length();
   int leftPadding = padding / 2;
 
   return repeat(" ", leftPadding) + text;
+}
+
+void drawDoubleBreakLine()
+{
+  cout << repeat("=", WIDTH) << '\n';
+}
+
+void printCenter(const std::string &s)
+{
+  cout << center(s) << '\n';
+}
+
+void drawScreenHeader(const std::string &title)
+{
+  drawDoubleBreakLine();
+  printCenter(title);
+  drawDoubleBreakLine();
+  cout << '\n';
+}
+
+void drawBreakLine()
+{
+  cout << repeat("-", WIDTH) << '\n';
 }
 
 void clearScreen()

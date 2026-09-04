@@ -33,13 +33,10 @@ void WelcomeScreen::handleOption(WelcomeOption option)
 
 void WelcomeScreen::draw()
 {
-  cout << repeat("=", 50) << '\n';
-  cout << center("Welcome", 50) << '\n';
-  cout << repeat("=", 50) << "\n\n";
+  drawScreenHeader("Welcome");
+  printCenter("Insert your card to continue");
+  drawBreakLine();
 
-  cout << center("Insert your card to continue", 50) << "\n\n";
-
-  cout << repeat("-", 50) << '\n';
   cout << repeat(" ", 11) << "[1] Insert Card\n";
   cout << repeat(" ", 11) << "[0] Exit\n\n";
 
