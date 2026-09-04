@@ -1,14 +1,35 @@
 #include "screens/WelcomeScreen.h"
+#include "screens/EnterPinScreen.h"
 #include "utils/utils.h"
 #include <iostream>
 
 using namespace std;
 
-enum WelcomeOptions
+WelcomeOption WelcomeScreen::readOption()
 {
-  INSERT_CARD = 1,
-  EXIT = 0
-};
+  int option;
+
+  cout << "Select an option: ";
+  cin >> option;
+
+  return static_cast<WelcomeOption>(option);
+}
+
+void WelcomeScreen::handleOption(WelcomeOption option)
+{
+  if (option == WelcomeOption::EXIT)
+  {
+    cout << "Thanks for using our ATM\n";
+    return;
+  }
+
+  if (option == WelcomeOption::INSERT_CARD)
+  {
+    cout << '\n';
+    EnterPinScreen enterPinScreen;
+    enterPinScreen.draw();
+  }
+}
 
 void WelcomeScreen::draw()
 {
@@ -20,5 +41,8 @@ void WelcomeScreen::draw()
 
   cout << repeat("-", 50) << '\n';
   cout << repeat(" ", 11) << "[1] Insert Card\n";
-  cout << repeat(" ", 11) << "[0] Exit\n";
+  cout << repeat(" ", 11) << "[0] Exit\n\n";
+
+  WelcomeOption option = readOption();
+  handleOption(option);
 }
