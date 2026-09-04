@@ -31,7 +31,7 @@ string center(const std::string &text)
   return repeat(" ", leftPadding) + text;
 }
 
-void drawDoubleBreakLine()
+void printDoubleBreakLine()
 {
   cout << repeat("=", WIDTH) << '\n';
 }
@@ -41,15 +41,15 @@ void printCenter(const std::string &s)
   cout << center(s) << '\n';
 }
 
-void drawScreenHeader(const std::string &title)
+void printScreenHeader(const std::string &title)
 {
-  drawDoubleBreakLine();
+  printDoubleBreakLine();
   printCenter(title);
-  drawDoubleBreakLine();
+  printDoubleBreakLine();
   cout << '\n';
 }
 
-void drawBreakLine()
+void printBreakLine()
 {
   cout << repeat("-", WIDTH) << '\n';
 }

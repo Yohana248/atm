@@ -27,15 +27,15 @@ void WelcomeScreen::handleOption(WelcomeOption option)
   {
     clearScreen();
     EnterPinScreen enterPinScreen;
-    enterPinScreen.draw();
+    enterPinScreen.print();
   }
 }
 
-void WelcomeScreen::draw()
+void WelcomeScreen::print()
 {
-  drawScreenHeader("Welcome");
+  printScreenHeader("Welcome");
   printCenter("Insert your card to continue");
-  drawBreakLine();
+  printBreakLine();
 
   cout << repeat(" ", 11) << "[1] Insert Card\n";
   cout << repeat(" ", 11) << "[0] Exit\n\n";

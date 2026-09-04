@@ -16,12 +16,12 @@ string EnterPinScreen::readPin()
   return pin;
 }
 
-void EnterPinScreen::draw()
+void EnterPinScreen::print()
 {
-  drawScreenHeader("Enter PIN");
+  printScreenHeader("Enter PIN");
 
   string pin = readPin();
   cout << '\n'
        << pin << '\n';
-  drawBreakLine();
+  printBreakLine();
 }

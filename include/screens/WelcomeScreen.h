@@ -13,5 +13,5 @@ private:
   void handleOption(WelcomeOption option);
 
 public:
-  void draw();
+  void print();
 };

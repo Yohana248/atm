@@ -4,8 +4,8 @@
 
 std::string repeat(const std::string &s, int n);
 std::string center(const std::string &text);
-void drawDoubleBreakLine();
+void printDoubleBreakLine();
 void printCenter(const std::string &s);
-void drawScreenHeader(const std::string &title);
-void drawBreakLine();
+void printScreenHeader(const std::string &title);
+void printBreakLine();
 void clearScreen();

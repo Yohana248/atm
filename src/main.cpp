@@ -4,5 +4,5 @@
 int main()
 {
   WelcomeScreen welcomeScreen;
-  welcomeScreen.draw();
+  welcomeScreen.print();
 }

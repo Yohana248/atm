@@ -10,5 +10,5 @@ private:
   string readPin();
 
 public:
-  void draw();
+  void print();
 };
