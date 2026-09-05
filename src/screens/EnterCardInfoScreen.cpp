@@ -3,10 +3,9 @@
 #include "utils/stringUtils.h"
 #include "model/Card.h"
 #include "dao/CardDao.h"
+#include "utils/confirm.h"
 #include <iostream>
 #include <string>
-#include <iomanip>
-#include <algorithm>
 
 using namespace std;
 
@@ -20,29 +19,38 @@ bool EnterCardInfoScreen::isValidCardNumber(const string &cardNunmber)
   return cardNunmber.length() == 16 && areAllCharsDigits(cardNunmber);
 }
 
-string EnterCardInfoScreen::readCardNumberUntilValidInputWithMaxTries(int maxTries)
+char EnterCardInfoScreen::readTryAgainOrExit()
 {
-  string cardNumber = readCardNumber();
-
-  int tries = 1;
-  while (!isValidCardNumber(cardNumber) && tries < maxTries)
-  {
-    cout << "Card Number must be 16 digits. Please try again ( "
-         << "you have "
-         << calcAvailabePinTries(maxTries, tries)
-         << " trie(s) )"
-         << '\n';
-    cout << '\n';
-    cardNumber = readCardNumber();
-    tries++;
-  }
-
-  return isValidCardNumber(cardNumber) ? cardNumber : "";
+  char answer;
+  cout << "Enter (y) to try again or another letter to exit: ";
+  cin >> answer;
+  return answer;
 }
 
-int EnterCardInfoScreen::calcAvailabePinTries(int max, int tries)
+string EnterCardInfoScreen::readCardNumberUntilValidInput()
 {
-  return max - tries;
+  string cardNumber;
+  Confirm confirm = Confirm::YES;
+
+  do
+  {
+    cardNumber = readCardNumber();
+
+    if (!isValidCardNumber(cardNumber))
+    {
+      cout << "Card Number must be 16 digits. ";
+      char answer = readTryAgainOrExit();
+      confirm = handleConfirm(answer);
+      cout << '\n';
+    }
+    else
+    {
+      break;
+    }
+
+  } while (confirm == Confirm::YES);
+
+  return confirm == Confirm::NO ? "" : cardNumber;
 }
 
 string EnterCardInfoScreen::readPin()
@@ -55,24 +63,30 @@ bool EnterCardInfoScreen::isValidPin(const string &pin)
   return pin.length() == 4 && areAllCharsDigits(pin);
 }
 
-string EnterCardInfoScreen::readPinUntilValidInputWithMaxTries(int maxTries)
+string EnterCardInfoScreen::readPinUntilValidInput()
 {
-  string pin = readPin();
+  string pin;
+  Confirm confirm = Confirm::YES;
 
-  int tries = 1;
-  while (!isValidPin(pin) && tries < maxTries)
+  do
   {
-    cout << "PIN must be 4 digits. Please try again ( "
-         << "you have "
-         << calcAvailabePinTries(maxTries, tries)
-         << " trie(s) )"
-         << '\n';
-    cout << '\n';
     pin = readPin();
-    tries++;
-  }
 
-  return isValidPin(pin) ? pin : "";
+    if (!isValidPin(pin))
+    {
+      cout << "PIN must be 4 digits. ";
+      char answer = readTryAgainOrExit();
+      confirm = handleConfirm(answer);
+      cout << '\n';
+    }
+    else
+    {
+      break;
+    }
+
+  } while (confirm == Confirm::YES);
+
+  return confirm == Confirm::NO ? "" : pin;
 }
 
 void EnterCardInfoScreen::printFinishingAvailTriesMsg()
@@ -82,42 +96,74 @@ void EnterCardInfoScreen::printFinishingAvailTriesMsg()
   printBreakLine();
 }
 
+void EnterCardInfoScreen::handlePinInput(const Card &card)
+{
+  int remainingAttempts = 3;
+  Confirm confirm = Confirm::YES;
+  do
+  {
+    string pin = readPinUntilValidInput();
+    if (pin.empty())
+    {
+      printExitMsg();
+      return;
+    }
+
+    if (card.pin != pin)
+    {
+      remainingAttempts--;
+      cout << "PIN is wrong. ";
+      if (remainingAttempts == 0)
+      {
+        cout << "\nYou consumed all attempts\n";
+        printExitMsg();
+        return;
+      }
+      cout << "You have " << remainingAttempts << " remaining attempts.\n";
+      char answer = readTryAgainOrExit();
+      confirm = handleConfirm(answer);
+      cout << '\n';
+    }
+    else
+    {
+      break;
+    }
+  } while (confirm == Confirm::YES);
+
+  cout << '\n';
+  if (confirm == Confirm::NO)
+  {
+    printExitMsg();
+  }
+  else
+  {
+    cout << "You are welcome!\n";
+  }
+
+  printBreakLine();
+}
+
 void EnterCardInfoScreen::print()
 {
   printScreenHeader("Enter Card Info");
 
-  string cardNumber = readCardNumberUntilValidInputWithMaxTries(3);
+  string cardNumber = readCardNumberUntilValidInput();
   if (cardNumber.empty())
   {
-    printFinishingAvailTriesMsg();
+    printExitMsg();
     return;
   }
   cout << '\n';
 
   CardDao cardDao;
   optional<Card> card = cardDao.getCardByNumber(cardNumber);
-  if (!card.has_value())
+  if (!card)
   {
     cout << "Card not found\n";
     printExitMsg();
+    printBreakLine();
     return;
   }
 
-  string pin = readPinUntilValidInputWithMaxTries(3);
-  if (pin.empty())
-  {
-    printFinishingAvailTriesMsg();
-    return;
-  }
-  cout << '\n';
-
-  if (card.value().pin != pin)
-  {
-    cout << "PIN is wrong. Exit and try again!\n";
-    printExitMsg();
-    return;
-  }
-
-  cout << "You are welcome!\n";
-  printBreakLine();
+  handlePinInput(card.value());
 }

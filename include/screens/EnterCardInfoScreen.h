@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "model/Card.h"
 
 using namespace std;
 
@@ -9,12 +10,13 @@ class EnterCardInfoScreen
 private:
   string readCardNumber();
   bool isValidCardNumber(const string &cardNunmber);
-  string readCardNumberUntilValidInputWithMaxTries(int maxTries);
-  int calcAvailabePinTries(int tries, int max);
+  char readTryAgainOrExit();
+  string readCardNumberUntilValidInput();
   string readPin();
   bool isValidPin(const string &pin);
-  string readPinUntilValidInputWithMaxTries(int maxTries);
+  string readPinUntilValidInput();
   void printFinishingAvailTriesMsg();
+  void handlePinInput(const Card &card);
 
 public:
   void print();
