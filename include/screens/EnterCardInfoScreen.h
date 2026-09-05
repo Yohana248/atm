@@ -9,11 +9,11 @@ class EnterCardInfoScreen
 private:
   string readCardNumber();
   bool isValidCardNumber(const string &cardNunmber);
-  string readCardNumberUnti(int maxTries);
+  string readCardNumberUntilValidInputWithMaxTries(int maxTries);
   int calcAvailabePinTries(int tries, int max);
   string readPin();
   bool isValidPin(const string &pin);
-  string readPinUntil(int maxTries);
+  string readPinUntilValidInputWithMaxTries(int maxTries);
   void printFinishingAvailTriesMsg();
 
 public:

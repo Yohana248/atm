@@ -1,6 +1,8 @@
 #include "screens/EnterCardInfoScreen.h"
 #include "utils/utils.h"
 #include "utils/stringUtils.h"
+#include "model/Card.h"
+#include "dao/CardDao.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -18,7 +20,7 @@ bool EnterCardInfoScreen::isValidCardNumber(const string &cardNunmber)
   return cardNunmber.length() == 16 && areAllCharsDigits(cardNunmber);
 }
 
-string EnterCardInfoScreen::readCardNumberUnti(int maxTries)
+string EnterCardInfoScreen::readCardNumberUntilValidInputWithMaxTries(int maxTries)
 {
   string cardNumber = readCardNumber();
 
@@ -53,7 +55,7 @@ bool EnterCardInfoScreen::isValidPin(const string &pin)
   return pin.length() == 4 && areAllCharsDigits(pin);
 }
 
-string EnterCardInfoScreen::readPinUntil(int maxTries)
+string EnterCardInfoScreen::readPinUntilValidInputWithMaxTries(int maxTries)
 {
   string pin = readPin();
 
@@ -84,7 +86,7 @@ void EnterCardInfoScreen::print()
 {
   printScreenHeader("Enter Card Info");
 
-  string cardNumber = readCardNumberUnti(3);
+  string cardNumber = readCardNumberUntilValidInputWithMaxTries(3);
   if (cardNumber.empty())
   {
     printFinishingAvailTriesMsg();
@@ -92,7 +94,16 @@ void EnterCardInfoScreen::print()
   }
   cout << '\n';
 
-  string pin = readPinUntil(3);
+  CardDao cardDao;
+  optional<Card> card = cardDao.getCardByNumber(cardNumber);
+  if (!card.has_value())
+  {
+    cout << "Card not found\n";
+    printExitMsg();
+    return;
+  }
+
+  string pin = readPinUntilValidInputWithMaxTries(3);
   if (pin.empty())
   {
     printFinishingAvailTriesMsg();
@@ -100,6 +111,13 @@ void EnterCardInfoScreen::print()
   }
   cout << '\n';
 
-  cout << "Card Number and PIN are valid inputs\n";
+  if (card.value().pin != pin)
+  {
+    cout << "PIN is wrong. Exit and try again!\n";
+    printExitMsg();
+    return;
+  }
+
+  cout << "You are welcome!\n";
   printBreakLine();
 }
