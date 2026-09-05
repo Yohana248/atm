@@ -1,5 +1,5 @@
 #include "screens/WelcomeScreen.h"
-#include "screens/EnterPinScreen.h"
+#include "screens/EnterCardInfoScreen.h"
 #include "utils/utils.h"
 #include <iostream>
 
@@ -19,15 +19,15 @@ void WelcomeScreen::handleOption(WelcomeOption option)
 {
   if (option == WelcomeOption::EXIT)
   {
-    cout << "Thanks for using our ATM\n";
+    printExitMsg();
     return;
   }
 
   if (option == WelcomeOption::INSERT_CARD)
   {
     clearScreen();
-    EnterPinScreen enterPinScreen;
-    enterPinScreen.print();
+    EnterCardInfoScreen enterCardInfoScreen;
+    enterCardInfoScreen.print();
   }
 }
 

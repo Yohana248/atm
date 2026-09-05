@@ -1,5 +1,6 @@
 #include "utils/utils.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -54,6 +55,11 @@ void printBreakLine()
   cout << repeat("-", WIDTH) << '\n';
 }
 
+void printExitMsg()
+{
+  cout << "Thanks for using our ATM\n";
+}
+
 void clearScreen()
 {
 #ifdef _WIN32
@@ -65,4 +71,14 @@ void clearScreen()
     system("clear");
   }
 #endif
+}
+
+std::string readWord(const std::string &question)
+{
+  string word;
+
+  cout << question;
+  cin >> word;
+
+  return word;
 }

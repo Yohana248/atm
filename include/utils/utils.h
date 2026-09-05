@@ -8,4 +8,6 @@ void printDoubleBreakLine();
 void printCenter(const std::string &s);
 void printScreenHeader(const std::string &title);
 void printBreakLine();
+void printExitMsg();
 void clearScreen();
+std::string readWord(const std::string &question);
