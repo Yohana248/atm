@@ -97,7 +97,7 @@ void EnterCardInfoScreen::printFinishingAvailTriesMsg()
   printBreakLine();
 }
 
-void EnterCardInfoScreen::handlePinInput(const Card &card)
+void EnterCardInfoScreen::handlePinInput(Card &card)
 {
   int remainingAttempts = 3;
   Confirm confirm = Confirm::YES;
@@ -139,7 +139,7 @@ void EnterCardInfoScreen::handlePinInput(const Card &card)
   else
   {
     clearScreen();
-    MainMenu().print();
+    MainMenu(card).print();
   }
 }
 

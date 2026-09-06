@@ -1,4 +1,5 @@
 #include "screens/MainMenu.h"
+#include "screens/BalanceScreen.h"
 #include "utils/utils.h"
 #include <string>
 #include <iostream>
@@ -81,42 +82,47 @@ namespace
       cout << "Option must be between 1 and 6. Try again!\n";
     }
   }
+}
 
-  void handleOption(MainMenuOption option)
+MainMenu::MainMenu(Card &card) : card(card)
+{
+}
+
+void MainMenu::handleOption(MainMenuOption option)
+{
+  switch (option)
   {
-    switch (option)
-    {
-    case MainMenuOption::CHECK_BALANCE:
-      cout << "Check Balance\n";
-      return;
+  case MainMenuOption::CHECK_BALANCE:
+    clearScreen();
+    BalanceScreen(card).print();
+    return;
 
-    case MainMenuOption::WITHDRAW:
-      cout << "Withdraw\n";
-      return;
+  case MainMenuOption::WITHDRAW:
+    cout << "Withdraw\n";
+    return;
 
-    case MainMenuOption::DEPOSIT:
-      cout << "Deposit\n";
-      return;
+  case MainMenuOption::DEPOSIT:
+    cout << "Deposit\n";
+    return;
 
-    case MainMenuOption::TRANSFER:
-      cout << "Transfer\n";
-      return;
+  case MainMenuOption::TRANSFER:
+    cout << "Transfer\n";
+    return;
 
-    case MainMenuOption::TRANSACTION_HISTORY:
-      cout << "Transaction History\n";
-      return;
+  case MainMenuOption::TRANSACTION_HISTORY:
+    cout << "Transaction History\n";
+    return;
 
-    case MainMenuOption::CHANGE_PIN:
-      cout << "Change PIN\n";
-      return;
+  case MainMenuOption::CHANGE_PIN:
+    cout << "Change PIN\n";
+    return;
 
-    case MainMenuOption::EXIT:
-      cout << "Exit\n";
-      return;
-    }
-
-    throw std::invalid_argument("Invalid MainMenuOption");
+  case MainMenuOption::EXIT:
+    printExitMsg();
+    return;
   }
+
+  throw std::invalid_argument("Invalid MainMenuOption");
 }
 
 void MainMenu::print()

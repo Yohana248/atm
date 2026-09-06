@@ -15,6 +15,11 @@ enum class MainMenuOption
 
 class MainMenu
 {
+private:
+  Card &card;
+  void handleOption(MainMenuOption option);
+
 public:
+  explicit MainMenu(Card &card);
   void print();
 };

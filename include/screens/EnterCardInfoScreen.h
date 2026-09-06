@@ -16,7 +16,7 @@ private:
   bool isValidPin(const string &pin);
   string readPinUntilValidInput();
   void printFinishingAvailTriesMsg();
-  void handlePinInput(const Card &card);
+  void handlePinInput(Card &card);
 
 public:
   void print();
