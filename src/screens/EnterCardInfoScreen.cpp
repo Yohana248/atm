@@ -4,6 +4,7 @@
 #include "model/Card.h"
 #include "dao/CardDao.h"
 #include "utils/confirm.h"
+#include "screens/MainMenu.h"
 #include <iostream>
 #include <string>
 
@@ -137,10 +138,9 @@ void EnterCardInfoScreen::handlePinInput(const Card &card)
   }
   else
   {
-    cout << "You are welcome!\n";
+    clearScreen();
+    MainMenu().print();
   }
-
-  printBreakLine();
 }
 
 void EnterCardInfoScreen::print()
