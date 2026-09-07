@@ -59,7 +59,7 @@ namespace
         return static_cast<BalanceScreenOption>(option);
       }
 
-      cout << "Option must be between 1 and 6. Try again!\n";
+      cout << "Option must be between 0 or 1. Try again!\n";
     }
   }
 
