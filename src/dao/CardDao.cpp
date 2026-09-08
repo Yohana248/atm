@@ -2,6 +2,7 @@
 #include "utils/stringUtils.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -29,6 +30,68 @@ optional<Card> CardDao::getCardByNumber(const std::string &cardNumber)
   }
 
   return nullopt;
+}
+
+void CardDao::updateBalance(const Card &card, double newBalance)
+{
+  ifstream cardsDataFile(cardsDataPath);
+
+  filesystem::path tempFilePath = "data/temp.txt";
+  ofstream tempFile(tempFilePath);
+
+  if (!cardsDataFile.is_open())
+  {
+    throw runtime_error("Cannot open cards.txt file");
+  }
+
+  if (!tempFile.is_open())
+  {
+    throw runtime_error("Cannot create temp.txt file");
+  }
+
+  string line;
+  bool found = false;
+
+  getline(cardsDataFile, line);
+  tempFile << line << '\n';
+
+  while (getline(cardsDataFile, line))
+  {
+    stringstream ss(line);
+    string cardIdStr;
+    getline(ss, cardIdStr, '|');
+    int cardId = stoi(cardIdStr);
+
+    if (cardId == card.id)
+    {
+      found = true;
+      tempFile << card.id << '|' << card.number << '|' << card.pin << '|' << newBalance << '\n';
+    }
+    else
+    {
+      tempFile << line << '\n';
+    }
+  }
+
+  cardsDataFile.close();
+  tempFile.close();
+
+  if (found)
+  {
+    remove(cardsDataPath);
+    rename(tempFilePath, cardsDataPath);
+  }
+  else
+  {
+    remove(tempFilePath);
+    throw runtime_error("Card not found");
+  }
+}
+
+void CardDao::withdraw(const Card &card, double amount)
+{
+  double newBalance = card.balance - amount;
+  updateBalance(card, newBalance);
 }
 
 string CardDao::extractCardNumberFromLine(const string &line)

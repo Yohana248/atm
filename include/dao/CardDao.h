@@ -12,7 +12,9 @@ private:
   char fileDelimiter = '|';
   Card extractCardFromLine(const std::string &line);
   std::string extractCardNumberFromLine(const std::string &line);
+  void updateBalance(const Card &card, double newBalance);
 
 public:
   std::optional<Card> getCardByNumber(const std::string &cardNumber);
+  void withdraw(const Card &card, double amount);
 };

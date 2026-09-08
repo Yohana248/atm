@@ -1,5 +1,6 @@
 #include "screens/MainMenu.h"
 #include "screens/BalanceScreen.h"
+#include "screens/WithdrawScreen.h"
 #include "utils/utils.h"
 #include <string>
 #include <iostream>
@@ -98,7 +99,8 @@ void MainMenu::handleOption(MainMenuOption option)
     return;
 
   case MainMenuOption::WITHDRAW:
-    cout << "Withdraw\n";
+    clearScreen();
+    WithdrawScreen(card).print();
     return;
 
   case MainMenuOption::DEPOSIT:
