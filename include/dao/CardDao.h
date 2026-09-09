@@ -17,4 +17,5 @@ private:
 public:
   std::optional<Card> getCardByNumber(const std::string &cardNumber);
   void withdraw(const Card &card, double amount);
+  void deposite(const Card &card, double amount);
 };

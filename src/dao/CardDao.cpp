@@ -94,6 +94,12 @@ void CardDao::withdraw(const Card &card, double amount)
   updateBalance(card, newBalance);
 }
 
+void CardDao::deposite(const Card &card, double amount)
+{
+  double newBalance = card.balance + amount;
+  updateBalance(card, newBalance);
+}
+
 string CardDao::extractCardNumberFromLine(const string &line)
 {
   string cardNumber = "";
