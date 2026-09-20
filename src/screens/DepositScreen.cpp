@@ -1,4 +1,4 @@
-#include "screens/DepositeScreen.h"
+#include "screens/DepositScreen.h"
 #include "utils/utils.h"
 #include "dao/CardDao.h"
 #include <iostream>
@@ -18,7 +18,7 @@ namespace
   char confirmDeposit(double amount)
   {
     char answer;
-    cout << "Are you sure that you want to deposite $" << amount << ": ";
+    cout << "Are you sure that you want to deposit $" << amount << ": ";
     cin >> answer;
     return answer;
   }
@@ -41,15 +41,15 @@ namespace
   }
 }
 
-DepositeScreen::DepositeScreen(Card &card) : card(card)
+DepositScreen::DepositScreen(Card &card) : card(card)
 {
 }
 
-void DepositeScreen::print()
+void DepositScreen::print()
 {
   printScreenHeader("Deposit");
   double amount = readConfirmedAmount();
-  CardDao().deposite(card, amount);
+  CardDao().deposit(card, amount);
   confirmSuccessfulDeposit(card, amount);
   printExitMsg();
 }

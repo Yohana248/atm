@@ -94,7 +94,7 @@ void CardDao::withdraw(const Card &card, double amount)
   updateBalance(card, newBalance);
 }
 
-void CardDao::deposite(const Card &card, double amount)
+void CardDao::deposit(const Card &card, double amount)
 {
   double newBalance = card.balance + amount;
   updateBalance(card, newBalance);

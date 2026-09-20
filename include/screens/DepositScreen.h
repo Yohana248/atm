@@ -2,11 +2,11 @@
 
 #include "model/Card.h"
 
-class DepositeScreen
+class DepositScreen
 {
   Card &card;
 
 public:
-  explicit DepositeScreen(Card &card);
+  explicit DepositScreen(Card &card);
   void print();
 };

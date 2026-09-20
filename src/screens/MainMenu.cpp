@@ -1,7 +1,7 @@
 #include "screens/MainMenu.h"
 #include "screens/BalanceScreen.h"
 #include "screens/WithdrawScreen.h"
-#include "screens/DepositeScreen.h"
+#include "screens/DepositScreen.h"
 #include "utils/utils.h"
 #include <string>
 #include <iostream>
@@ -106,7 +106,7 @@ void MainMenu::handleOption(MainMenuOption option)
 
   case MainMenuOption::DEPOSIT:
     clearScreen();
-    DepositeScreen(card).print();
+    DepositScreen(card).print();
     return;
 
   case MainMenuOption::TRANSFER:
